@@ -1,0 +1,92 @@
+package expectation;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigInteger;
+
+public class Solution {
+
+	private static final BigInteger ZERO = BigInteger.valueOf(0);
+	private static final BigInteger THREE = BigInteger.valueOf(3);
+	private static final BigInteger TEN = BigInteger.valueOf(10);
+
+	private static int k;
+	private static int n;
+	
+	private static void parseInput(String[] args) {
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					System.in));
+
+			String input = br.readLine();
+			String[] split = input.split(" ");
+			k = Integer.valueOf(split[0]);
+			n = Integer.valueOf(split[1]);
+			
+		} catch (IOException io) {
+			io.printStackTrace();
+		}
+	}
+
+	public static boolean isDivisibleByThree(BigInteger value) {
+		BigInteger sum = ZERO;
+		while (value.compareTo(ZERO) > 0) {
+			sum = sum.add(value.mod(TEN));
+			value = value.divide(TEN);
+		}
+		
+		return sum.mod(THREE).equals(ZERO);
+	}
+	
+	private static void mock() {
+		k = 1;
+		n = 1000;
+		//k = 1;
+		//n = 3;
+		//k = 1;
+		//n = 4;
+		//k = 5;
+		//n = 1000000000;
+	}
+	
+	public static void reduce(BigInteger up, BigInteger down) {
+		while (isDivisibleByThree(up) && isDivisibleByThree(down)) {
+			up = up.divide(THREE);
+			down = down.divide(THREE);
+		}
+		
+		/*for (int i = (int) down; i > 1; i--) {
+			BigInteger bigI = BigInteger.valueOf(i);
+			if (up.mod(bigI).equals(ZERO)) {
+				up = up.divide(bigI);
+				down /= i;
+			}
+		}*/
+	}
+	
+    public static void main(String[] args) {
+    	//parseInput(args);
+    	mock();
+    	
+    	BigInteger up = BigInteger.valueOf(2).multiply(BigInteger.valueOf(n - 2));
+    	BigInteger down = THREE;
+    	/*if (isDivisibleByThree(up)) {
+    		up = up.divide(BigInteger.valueOf(3));
+    		down = 1;
+    	}*/
+    	final BigInteger originalUp = up;
+    	final BigInteger originalDown = down;
+    	for (int i = 2; i <= k; i++) {
+    		up = up.multiply(originalUp);
+    		down = down.multiply(originalDown);
+    	}
+    	
+    	while (isDivisibleByThree(up) && isDivisibleByThree(down)) {
+			up = up.divide(THREE);
+			down = down.divide(THREE);
+		}
+    	
+    	System.out.println(up + /*(down.intValue() == 1 ? "" : */" / " + down/*)*/);
+    }
+}

@@ -1,0 +1,134 @@
+package library;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution {
+
+	private static int numberOfTestCases;
+	private static TestCase[] testCases;
+
+	private static class TestCase {
+		public int numberOfShelves;
+		public short[] shelves;
+		public int numberOfQueries;
+		public String[] queries;
+	}
+
+	private static void parseInput(String[] args) {
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					System.in));
+
+			String input = br.readLine();
+			numberOfTestCases = Integer.valueOf(input);
+			testCases = new TestCase[numberOfTestCases];
+
+			int count = 0;
+			while (count < numberOfTestCases) {
+				TestCase tc = new TestCase();
+				input = br.readLine();
+				tc.numberOfShelves = Integer.valueOf(input);
+				tc.shelves = new short[tc.numberOfShelves];
+
+				input = br.readLine();
+				String[] shelves = input.split(" ");
+				for (int i = 0; i < shelves.length; i++) {
+					tc.shelves[i] = Short.valueOf(shelves[i]);
+				}
+
+				input = br.readLine();
+				tc.numberOfQueries = Integer.valueOf(input);
+				tc.queries = new String[tc.numberOfQueries];
+
+				int queriesCount = 0;
+				while (queriesCount < tc.numberOfQueries) {
+					input = br.readLine();
+					tc.queries[queriesCount++] = input;
+				}
+
+				testCases[count++] = tc;
+			}
+		} catch (IOException io) {
+			io.printStackTrace();
+		}
+	}
+
+	private static void swap(short[] array, int from, int to) {
+		if (from == to) {
+			return;
+		}
+
+		short tmp = array[from];
+		array[from] = array[to];
+		array[to] = tmp;
+	}
+
+	private static void heapify(short[] array, int from, int to) {
+		for (int i = from + 1; i <= to; i++) {
+			int k = i;
+			for (int j = (k - 1) / 2; j >= 0; j = (j - 1) / 2) {
+				if (array[k] < array[j]) {
+					swap(array, k, j);
+					k = j;
+				} else {
+					break;
+				}
+			}
+		}
+	}
+	public static short findKthSmallest(short[] array, int k) {
+		for (int i = 0; i <= k; i++) {
+			heapify(array, i, array.length - 1);
+		}
+		return array[k];
+	}
+
+	private static void mock() {
+		numberOfTestCases = 2;
+		testCases = new TestCase[2];
+
+		TestCase tc0 = new TestCase();
+		tc0.numberOfShelves = 2;
+		tc0.shelves = new short[] { 1, 2 };
+		tc0.numberOfQueries = 2;
+		tc0.queries = new String[] { "0 1 2 1", "0 1 2 2" };
+		testCases[0] = tc0;
+
+		TestCase tc1 = new TestCase();
+		tc1.numberOfShelves = 4;
+		tc1.shelves = new short[] { 4, 3, 2, 1 };
+		tc1.numberOfQueries = 4;
+		tc1.queries = new String[] { "0 1 1 1", "1 1 1", "0 1 1 1", "0 1 4 3" };
+		testCases[1] = tc1;
+	}
+
+	public static void main(String[] args) {
+		mock();
+		//parseInput(args);
+		for (TestCase tc : testCases) {
+			for (String query : tc.queries) {
+				if (query.startsWith("1")) {
+					String[] split = query.split(" ");
+					int index = Integer.valueOf(split[1]) - 1;
+					short value = Short.valueOf(split[2]);
+					tc.shelves[index] = value;
+				}
+
+				if (query.startsWith("0")) {
+					String[] split = query.split(" ");
+					int x = Integer.valueOf(split[1]);
+					int y = Integer.valueOf(split[2]);
+					int k = Integer.valueOf(split[3]);
+					int length = y - x + 1;
+					short[] array = new short[length];
+					System.arraycopy(tc.shelves, x - 1, array, 0, length);
+					short result = findKthSmallest(array, k - 1);
+					System.out.println(result);
+				}
+			}
+		}
+	}
+
+}
