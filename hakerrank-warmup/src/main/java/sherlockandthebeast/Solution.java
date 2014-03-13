@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Solution {
 
-	private static String inverse(String s) {
+	private static String reverse(String s) {
 		char[] charArray = s.toCharArray();
 		int i = 0;
 		int j = charArray.length - 1;
@@ -41,7 +41,7 @@ public class Solution {
 			if (n < 0) {
 				System.out.println("-1");
 			} else {
-				System.out.println(inverse(sb.toString()));
+				System.out.println(reverse(sb.toString()));
 			}
 		}
 	}
