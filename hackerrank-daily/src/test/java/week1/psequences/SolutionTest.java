@@ -17,5 +17,12 @@ public class SolutionTest {
 		Assert.assertEquals(1, Solution.findNumberOfSequences(1000, 1));
 		Assert.assertEquals(1, Solution.findNumberOfSequences(2, 1));
 	}
-	
+
+	//4446
+	/*@Test
+	public void testFindNumberOfSequencesPerformance() {
+		long start = System.currentTimeMillis();
+		Assert.assertEquals(824068420, Solution.findNumberOfSequences(1000, 1000000));
+		System.out.println(System.currentTimeMillis() - start);
+	}*/
 }

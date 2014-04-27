@@ -35,26 +35,28 @@ public class Solution {
 		return sum;
 	}*/
 	
-	/*public static int findNumberOfSequences(int n, int p) {
-		long[] values = new long[p + 1];
-		long[] tmp = new long[p + 1];
+	public static int findNumberOfSequences(int n, int p) {
+		int[] values = new int[p + 1];
+		int[] tmp = new int[p + 1];
 		
 		for (int i = 1; i <= p; i++) {
 			values[i] = 1;
 		}
 		
 		for (int i = 1; i < n; i++) {
-			for (int j = p; j >= 1; j--) {
-				long subsum = 0;
+			for (int j = 1; j <= p; j++) {
+				int subsum = 0;
 				for (int k = p / j; k >= 1; k--) {
-					subsum = (subsum + values[k]) % 10000000000L;
+					subsum = (subsum + values[k]) % 1000000007;
 				}
 				tmp[j] = subsum;
 			}
-			for (int j = p; j >= 1; j--) {
+			System.arraycopy(tmp, 0, values, 0, tmp.length);
+			//values = tmp;
+			/*for (int j = p; j >= 1; j--) {
 				values[j] = tmp[j];
 				tmp[j] = 0;
-			}			
+			}*/			
 		}
 
 		BigInteger count = BigInteger.ZERO;
@@ -62,9 +64,9 @@ public class Solution {
 			count = count.add(BigInteger.valueOf(values[i]));
 		}
 		return count.mod(BigInteger.valueOf(1000000007)).intValue();
-	}*/
+	}
 
-	public static int findNumberOfSequences(int n, int p) {
+	/*public static int findNumberOfSequences(int n, int p) {
 		BigInteger[] values = new BigInteger[p + 1];
 		BigInteger[] tmp = new BigInteger[p + 1];
 		
@@ -91,7 +93,7 @@ public class Solution {
 			count = count.add(values[i]);
 		}
 		return count.mod(BigInteger.valueOf(1000000007)).intValue();
-	}
+	}*/
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
