@@ -9,11 +9,14 @@ import java.util.Set;
 
 public class Solution {
 
-	public static final int MAX_POWER = 800;
+	//public static final int MAX_POWER = 800;
+	public static final int MAX_POWER = 20000;
+	
 	// 3: min: 1004, max: 1203, avg: 1020
 	// 4: min: 717, max: 902, avg: 725
 	// 5: min: 737, max: 930, avg: 746
-	public static final int THRESHOLD = 4;
+	//public static final int THRESHOLD = 4;
+	public static final int THRESHOLD = 7;
 
 	private static int hashcode(String s, int from, int to) {
 		int hashcode = 0;
